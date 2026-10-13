@@ -4,15 +4,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.seijihe.rest_with_spring_boot.service.MathService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController 
 @RequestMapping("/math")
 public class MathController {
 
+    // When we don't have the @Autowired
     private MathService service = new MathService();
     
     //http://localhost:8080/math/sum/3/5
-    @RequestMapping("/sum/{numberOne}/{numberTwo}")
+    @RequestMapping(
+        value = "/sum/{numberOne}/{numberTwo}",
+        method = RequestMethod.GET
+    )
     public Double sum(
         @PathVariable("numberOne") String numberOne,
         @PathVariable("numberTwo") String numberTwo){
@@ -23,7 +28,10 @@ public class MathController {
         //return 1D;
     }
 
-    @RequestMapping("/subtraction/{numberOne}/{numberTwo}")
+    @RequestMapping(
+        value = "/subtraction/{numberOne}/{numberTwo}",
+        method = RequestMethod.GET
+    )
     public Double subtraction(
         @PathVariable String numberOne,
         @PathVariable String numberTwo) {
@@ -31,7 +39,10 @@ public class MathController {
         return service.subtraction(numberOne, numberTwo);
     }
 
-    @RequestMapping("/multiplication/{numberOne}/{numberTwo}")
+    @RequestMapping(
+        value = "/multiplication/{numberOne}/{numberTwo}",
+        method = RequestMethod.GET
+    )
     public Double multiplication(
         @PathVariable String numberOne,
         @PathVariable String numberTwo) {
@@ -40,7 +51,10 @@ public class MathController {
 
     }
 
-    @RequestMapping("/division/{numberOne}/{numberTwo}")
+    @RequestMapping(
+        value = "/division/{numberOne}/{numberTwo}",
+        method = RequestMethod.GET
+    )
     public Double divide(
         @PathVariable String numberOne,
         @PathVariable String numberTwo) {
@@ -49,7 +63,10 @@ public class MathController {
 
     }
 
-    @RequestMapping("/mean/{numberOne}/{numberTwo}")
+    @RequestMapping(
+        value = "/mean/{numberOne}/{numberTwo}",
+        method = RequestMethod.GET
+    )
     public Double mean(
         @PathVariable String numberOne,
         @PathVariable String numberTwo) {
@@ -58,7 +75,10 @@ public class MathController {
 
     }
 
-    @RequestMapping("/square-root/{number}")
+    @RequestMapping(
+        value = "/square-root/{number}",
+        method = RequestMethod.GET
+    )
     public Double squareRoot(
         @PathVariable String number) {
         

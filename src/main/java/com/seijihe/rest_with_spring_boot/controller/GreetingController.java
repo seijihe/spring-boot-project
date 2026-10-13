@@ -4,16 +4,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.seijihe.rest_with_spring_boot.model.Greeting;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController 
-public class GreetingControllers {
+public class GreetingController {
     
     private static final String template = "Hello, %s! A good meal is %s";
     private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("/greeting") //http://localhost:8080/greeting
+    @RequestMapping(
+        value = "/greeting",
+        method = RequestMethod.GET
+    ) //http://localhost:8080/greeting
     public Greeting greeting(
             @RequestParam(value = "name", defaultValue = "World") //http://localhost:8080/greeting?name=Seiji
             String name,
