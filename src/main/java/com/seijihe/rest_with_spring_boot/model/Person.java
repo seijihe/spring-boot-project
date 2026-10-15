@@ -1,19 +1,35 @@
 package com.seijihe.rest_with_spring_boot.model;
 
 import java.io.Serializable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /* 
     In this case we'll read/write data. 
     For that reason record doesn't meet our requirements.
 */
 
+@Entity 
+@Table(name = "person") // If the name of database is different of the current class
 public class Person implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Will increment automatically
     private Long id;
+
+    @Column(name = "name", nullable = false, length = 80)
     private String name;
+
+    @Column(nullable = false, length = 80)
     private String company;
+
+    @Column(nullable = false)
     private Integer age;
     
     public static long getSerialversionuid() {

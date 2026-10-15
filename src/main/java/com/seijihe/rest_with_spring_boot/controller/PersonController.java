@@ -3,13 +3,16 @@ package com.seijihe.rest_with_spring_boot.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.seijihe.rest_with_spring_boot.model.Person;
 import com.seijihe.rest_with_spring_boot.service.PersonService;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController 
 @RequestMapping("/person")
@@ -18,22 +21,32 @@ public class PersonController {
     @Autowired 
     private PersonService service;
 
-    @RequestMapping(value = "/{id}", 
-        method = RequestMethod.GET,
+    // @RequestMapping(value = "/{id}", 
+    //     method = RequestMethod.GET,
+    //     produces = MediaType.APPLICATION_JSON_VALUE
+    // )    
+    // public Person findById(@PathVariable("id") Long id) {
+    //     return service.findById(id);
+    // }
+
+    /*
+        If you take a look, @GetMapping is an alias for
+        @RequestMapping(method = RequestMethod.GET)
+    */
+
+    @GetMapping(value = "/{id}", //
         produces = MediaType.APPLICATION_JSON_VALUE
     )    
-    public Person findById(@PathVariable("id") String id) {
+    public Person findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
-    @RequestMapping(
-        method=RequestMethod.GET)
+    @GetMapping()
     public List<Person> findAll() {
         return service.findAll();
     }
 
-    @RequestMapping(
-        method=RequestMethod.POST,
+    @PostMapping(
         consumes = MediaType.APPLICATION_JSON_VALUE, // Automatically for Spring (until yaml/xml), but manual for Sweeger
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -41,8 +54,7 @@ public class PersonController {
         return service.create(person);
     }
 
-    @RequestMapping(
-        method=RequestMethod.PUT,
+    @PutMapping(
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -50,10 +62,8 @@ public class PersonController {
         return service.update(person);
     }
 
-    @RequestMapping(value = "/{id}", 
-        method = RequestMethod.DELETE
-    )    
-    public void delete(@PathVariable("id") String id) {
+    @DeleteMapping(value = "/{id}")    
+    public void delete(@PathVariable("id") Long id) {
         service.delete(id);
     }
     

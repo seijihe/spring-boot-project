@@ -1,1 +1,19 @@
-
+spring:
+    application:
+        name: spring-database
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/spring-database?useTimeZone=true&serverTimeZone=UTC
+        username: root
+        password: admin123
+    sql:
+        init:
+            mode: always
+    jpa:
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+        show-sql: false
