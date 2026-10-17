@@ -83,6 +83,22 @@ public class {
 
 ---
 
+### SLF4J
+
+Log Hierarch:
+
+> Trace > Debug > Info > Warn > Error
+
+SLF4J (Simple Log Facade for Java): just an interface, the implementation can be something as Logback. That happens because you can change the implemetation until remove the methods distributed across your code. 
+
+I can also create `application-hom.yml`, `application-prod.yml` per environment, and call it at terminal
+
+```bash
+java -jar app.jar --spring.profiles.active=prod
+```
+
+---
+
 ### Personal Annotations
 
 1. Mock Development is a good way to structure methods relations util add the logic implementation inside them. 

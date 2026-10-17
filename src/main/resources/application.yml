@@ -17,3 +17,10 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
         show-sql: false
+
+logging:
+    level:
+        '[com.seijihe.rest_with_spring_boot]': INFO
+        root: WARN
+    file:
+        name: logs/app.log

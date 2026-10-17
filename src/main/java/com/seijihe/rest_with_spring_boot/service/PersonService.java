@@ -1,30 +1,42 @@
 package com.seijihe.rest_with_spring_boot.service;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.seijihe.rest_with_spring_boot.dto.ObjectMapper;
+import com.seijihe.rest_with_spring_boot.dto.PersonDTO;
 import com.seijihe.rest_with_spring_boot.exception.ResourceNotFoundException;
 import com.seijihe.rest_with_spring_boot.model.Person;
 import com.seijihe.rest_with_spring_boot.repository.PersonRepository;
+
 
 @Service 
 public class PersonService {
     
     // private final AtomicLong counter = new AtomicLong();
+    // @Autowired 
+    // PersonRepository repository;
 
-    @Autowired 
-    PersonRepository repository;
+    private final PersonRepository repository;
+    private final ObjectMapper mapper;
 
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+    public PersonService(PersonRepository repository, ObjectMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
+
+    private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
     /*
         Mock: create structures of code to be used temporarily, and in the future when it
         not used anymore, can be deleted. 
     */
 
-    public List<Person> findAll() {
+    public List<PersonDTO> findAll() {
 
         logger.info("Finding all people");
 
@@ -42,11 +54,11 @@ public class PersonService {
         //     });
         
  
-        return repository.findAll();
-
+        return mapper.personListToPersonDTOList(repository.findAll());
+        
     }
 
-    public Person findById(Long id) {
+    public PersonDTO findById(Long id) {
         logger.info("Finding a Person at Database");
 
         // Person person = new Person();
@@ -55,22 +67,30 @@ public class PersonService {
         // person.setCompany("Apple");
         // person.setAge(56);
 
-        return repository.findById(id)
+        Person person = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("No records founded for this ID"));
+        
+        return mapper.personToPersonDTO(person);
 
     }
 
-    public Person create(Person person) {
+    public PersonDTO create(PersonDTO personDTO) {
 
         logger.info("Creating a person");
         
-        return repository.save(person);
+        Person person = mapper.personDTOToPerson(personDTO);
+
+        Person saved = repository.save(person);
+
+        return mapper.personToPersonDTO(saved);
 
     }
 
-    public Person update(Person person) {
+    public PersonDTO update(PersonDTO personDTO) {
 
         logger.info("Updating a person");
+
+        Person person = mapper.personDTOToPerson(personDTO);
 
         Person entity = repository.findById(person.getId())
             .orElseThrow(() -> new ResourceNotFoundException("No records founded for this ID"));
@@ -79,8 +99,8 @@ public class PersonService {
         entity.setAge(person.getAge());
         entity.setCompany(person.getCompany());
         
-        return person;
-
+        return mapper.personToPersonDTO(entity);
+        
     }
 
     public void delete(Long id) {
