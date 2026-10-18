@@ -99,6 +99,14 @@ java -jar app.jar --spring.profiles.active=prod
 
 ---
 
+### DTO's
+
+### API Versioning
+
+Versioning by path
+
+---
+
 ### Personal Annotations
 
 1. Mock Development is a good way to structure methods relations util add the logic implementation inside them. 

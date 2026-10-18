@@ -1,7 +1,6 @@
 package com.seijihe.rest_with_spring_boot.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,40 +10,28 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.seijihe.rest_with_spring_boot.dto.PersonDTO;
-import com.seijihe.rest_with_spring_boot.model.Person;
-import com.seijihe.rest_with_spring_boot.service.PersonService;
+import com.seijihe.rest_with_spring_boot.dto.v2.PersonDTOV2;
+import com.seijihe.rest_with_spring_boot.service.PersonServiceV2;
 
 @RestController 
-@RequestMapping("/person")
-public class PersonController {
-    
-    @Autowired 
-    private PersonService service;
+@RequestMapping("/v2/person")
+public class PersonControllerV2{
 
-    // @RequestMapping(value = "/{id}", 
-    //     method = RequestMethod.GET,
-    //     produces = MediaType.APPLICATION_JSON_VALUE
-    // )    
-    // public Person findById(@PathVariable("id") Long id) {
-    //     return service.findById(id);
-    // }
+    private final PersonServiceV2 service;
 
-    /*
-        If you take a look, @GetMapping is an alias for
-        @RequestMapping(method = RequestMethod.GET)
-    */
+    public PersonControllerV2(PersonServiceV2 service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "/{id}", //
         produces = MediaType.APPLICATION_JSON_VALUE
     )    
-    public PersonDTO findById(@PathVariable("id") Long id) {
+    public PersonDTOV2 findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
     @GetMapping()
-    public List<PersonDTO> findAll() {
+    public List<PersonDTOV2> findAll() {
         return service.findAll();
     }
 
@@ -52,7 +39,7 @@ public class PersonController {
         consumes = MediaType.APPLICATION_JSON_VALUE, // Automatically for Spring (until yaml/xml), but manual for Sweeger
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonDTO create(@RequestBody PersonDTO personDTO) {
+    public PersonDTOV2 create(@RequestBody PersonDTOV2 personDTO) {
         return service.create(personDTO);
     }
 
@@ -60,7 +47,7 @@ public class PersonController {
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonDTO update(@RequestBody PersonDTO personDTO) {
+    public PersonDTOV2 update(@RequestBody PersonDTOV2 personDTO) {
         return service.update(personDTO);
     }
 

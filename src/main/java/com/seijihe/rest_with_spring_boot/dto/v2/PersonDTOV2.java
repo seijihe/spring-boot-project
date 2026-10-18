@@ -1,8 +1,9 @@
-package com.seijihe.rest_with_spring_boot.dto;
+package com.seijihe.rest_with_spring_boot.dto.v2;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-public class PersonDTO implements Serializable{
+public class PersonDTOV2 implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
@@ -10,7 +11,8 @@ public class PersonDTO implements Serializable{
     private String name;
     private String company;
     private Integer age;
-    
+    private LocalDate birthday;
+
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
@@ -34,7 +36,7 @@ public class PersonDTO implements Serializable{
     public String getCompany() {
         return company;
     }
-    
+
     public void setCompany(String company) {
         this.company = company;
     }
@@ -46,6 +48,14 @@ public class PersonDTO implements Serializable{
     public void setAge(Integer age) {
         this.age = age;
     }
+    
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
     @Override
     public int hashCode() {
@@ -55,6 +65,7 @@ public class PersonDTO implements Serializable{
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((company == null) ? 0 : company.hashCode());
         result = prime * result + ((age == null) ? 0 : age.hashCode());
+        result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         return result;
     }
 
@@ -66,7 +77,7 @@ public class PersonDTO implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PersonDTO other = (PersonDTO) obj;
+        PersonDTOV2 other = (PersonDTOV2) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -87,7 +98,11 @@ public class PersonDTO implements Serializable{
                 return false;
         } else if (!age.equals(other.age))
             return false;
+        if (birthday == null) {
+            if (other.birthday != null)
+                return false;
+        } else if (!birthday.equals(other.birthday))
+            return false;
         return true;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.seijihe.rest_with_spring_boot.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,10 @@ public class Person implements Serializable{
 
     @Column(nullable = false)
     private Integer age;
-    
+
+    @Column(nullable = false)
+    private LocalDate birthday;
+
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
@@ -55,7 +59,7 @@ public class Person implements Serializable{
     public String getCompany() {
         return company;
     }
-    
+
     public void setCompany(String company) {
         this.company = company;
     }
@@ -68,6 +72,14 @@ public class Person implements Serializable{
         this.age = age;
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -76,6 +88,7 @@ public class Person implements Serializable{
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((company == null) ? 0 : company.hashCode());
         result = prime * result + ((age == null) ? 0 : age.hashCode());
+        result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
         return result;
     }
 
@@ -108,7 +121,12 @@ public class Person implements Serializable{
                 return false;
         } else if (!age.equals(other.age))
             return false;
+        if (birthday == null) {
+            if (other.birthday != null)
+                return false;
+        } else if (!birthday.equals(other.birthday))
+            return false;
         return true;
     }
-
+    
 }

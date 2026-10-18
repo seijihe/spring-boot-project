@@ -1,35 +1,36 @@
 package com.seijihe.rest_with_spring_boot.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.seijihe.rest_with_spring_boot.dto.ObjectMapper;
-import com.seijihe.rest_with_spring_boot.dto.PersonDTO;
+import com.seijihe.rest_with_spring_boot.dto.v1.PersonDTO;
+import com.seijihe.rest_with_spring_boot.dto.v1.PersonDTOMapper;
 import com.seijihe.rest_with_spring_boot.exception.ResourceNotFoundException;
 import com.seijihe.rest_with_spring_boot.model.Person;
 import com.seijihe.rest_with_spring_boot.repository.PersonRepository;
 
 
 @Service 
-public class PersonService {
+public class PersonServiceV1 {
+
+    private static final LocalDate DEFAULT_BIRTHDAY = LocalDate.of(1, 1, 1);
     
     // private final AtomicLong counter = new AtomicLong();
     // @Autowired 
     // PersonRepository repository;
 
     private final PersonRepository repository;
-    private final ObjectMapper mapper;
+    private final PersonDTOMapper mapper;
 
-    public PersonService(PersonRepository repository, ObjectMapper mapper) {
+    public PersonServiceV1(PersonRepository repository, PersonDTOMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
 
-    private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(PersonServiceV1.class.getName());
 
     /*
         Mock: create structures of code to be used temporarily, and in the future when it
@@ -79,6 +80,7 @@ public class PersonService {
         logger.info("Creating a person");
         
         Person person = mapper.personDTOToPerson(personDTO);
+        person.setBirthday(DEFAULT_BIRTHDAY);
 
         Person saved = repository.save(person);
 

@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS person (
     age INT NOT NULL,
     company VARCHAR(80) NOT NULL,
     name VARCHAR(80) NOT NULL,
+    birth_day DATE NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
