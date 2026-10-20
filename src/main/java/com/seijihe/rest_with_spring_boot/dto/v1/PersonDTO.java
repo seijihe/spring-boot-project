@@ -2,13 +2,24 @@ package com.seijihe.rest_with_spring_boot.dto.v1;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id", "name", "age", "birthday", "company"})
 public class PersonDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonProperty("person_name")
     private String name;
     private String company;
+
+    // @JsonIgnore // For non-null Database parameters because will omit that
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer age;
     
     public static long getSerialversionuid() {

@@ -2,15 +2,25 @@ package com.seijihe.rest_with_spring_boot.dto.v2;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.seijihe.rest_with_spring_boot.serializer.UperCaseSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
+@JsonPropertyOrder({"id", "name", "age", "birthday", "company"})
 public class PersonDTOV2 implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String name;
+
+    @JsonSerialize(using = UperCaseSerializer.class)
     private String company;
+
     private Integer age;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthday;
 
     public static long getSerialversionuid() {

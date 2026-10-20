@@ -120,6 +120,18 @@ java -jar app.jar --spring.profiles.active=prod
 
 ---
 
+### Custom Json Serialization
+
+- Serialization is the process of converting an object or data structure into a format that can be stored or transmitted (via network) and later reconstructed
+    - Define the order of elements at structure
+    - Formatation of fields (e.g converted to uppercase, format of date)
+- That format can be binary data, JSON, XML, or another representation.
+- Deserialization is the reverse process: converting this format (e.g Json) back into an object.
+- `@RequestBody` tells Spring to read the HTTP request body and convert its JSON content into a Java object.
+- `@RestController` tells Spring to write the returned object into the HTTP response body, typically serialized as JSON.
+
+---
+
 ### Personal Annotations
 
 1. Mock Development is a good way to structure methods relations util add the logic implementation inside them. 
