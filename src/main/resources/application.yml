@@ -3,20 +3,20 @@ spring:
         name: spring-database
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/spring-database?useTimeZone=true&serverTimeZone=UTC
+        url: jdbc:mysql://localhost:3306/spring-database?createDatabaseIfNotExist=true&useTimeZone=true&serverTimeZone=UTC
         username: root
         password: admin123
-    sql:
-        init:
-            mode: always
     jpa:
         defer-datasource-initialization: true
         hibernate:
-            ddl-auto: update
+            ddl-auto: none # update # will not be more hibernate that will create the table, but via migration
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
         show-sql: false
+    flyway:
+        locations: classpath:db/migration
+        enabled: true
 
 logging:
     level:

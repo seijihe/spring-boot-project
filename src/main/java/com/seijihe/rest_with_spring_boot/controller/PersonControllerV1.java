@@ -14,7 +14,7 @@ import com.seijihe.rest_with_spring_boot.dto.v1.PersonDTO;
 import com.seijihe.rest_with_spring_boot.service.PersonServiceV1;
 
 @RestController 
-@RequestMapping("/person")
+@RequestMapping("/api/v1/person")
 public class PersonControllerV1 {
     
     // @Autowired 

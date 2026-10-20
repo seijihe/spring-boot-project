@@ -14,7 +14,7 @@ import com.seijihe.rest_with_spring_boot.dto.v2.PersonDTOV2;
 import com.seijihe.rest_with_spring_boot.service.PersonServiceV2;
 
 @RestController 
-@RequestMapping("/v2/person")
+@RequestMapping("/api/v2/person")
 public class PersonControllerV2{
 
     private final PersonServiceV2 service;

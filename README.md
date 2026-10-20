@@ -101,9 +101,22 @@ java -jar app.jar --spring.profiles.active=prod
 
 ### DTO's
 
+---
+
 ### API Versioning
 
-Versioning by path
+- Approach that we'll use here: Versioning by path
+    - http://localhost:8080/person
+    - http://localhost:8080/v2/person
+
+---
+
+### Migrations
+
+- Evolucionary Database Design: versioning an Database [[link](https://www.martinfowler.com/articles/evodb.html)]
+- Name: PrefixVersion__Description_of_table.sql
+    - Prefix: `V` (versioned) | `U` (Undo)
+- At Maven projects: src/main/resources/db/migration
 
 ---
 
