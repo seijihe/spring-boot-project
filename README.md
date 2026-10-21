@@ -30,6 +30,7 @@ The ideia of this project is just introduction annotations about Spring Framewor
 @RestController
 @Service
 @Autowired
+@Configuration // Class that contains beans declarations
 ```
 
 ### Annotations at @RestController
@@ -122,13 +123,28 @@ java -jar app.jar --spring.profiles.active=prod
 
 ### Custom Json Serialization
 
-- Serialization is the process of converting an object or data structure into a format that can be stored or transmitted (via network) and later reconstructed
-    - Define the order of elements at structure
-    - Formatation of fields (e.g converted to uppercase, format of date)
-- That format can be binary data, JSON, XML, or another representation.
-- Deserialization is the reverse process: converting this format (e.g Json) back into an object.
-- `@RequestBody` tells Spring to read the HTTP request body and convert its JSON content into a Java object.
-- `@RestController` tells Spring to write the returned object into the HTTP response body, typically serialized as JSON.
+- Serialization is the process of converting an object or data structure into a format that can be stored or transmitted over a network and later reconstructed.
+    - Defines the order of elements in a JSON structure - `@JsonPropertyOrder`
+    - Formats fields (e.g., converting text to uppercase or formatting dates) - `@JsonFormat`
+    - Excludes fields that should not be exposed (e.g., sensitive data). - `@JsonFilter`, `@JsonIgnore`
+    - This is important because serialization determines how data is represented and delivered to clients.
+    - Are configurable aspects of serialization, not mandatory steps.
+- The serialized format can be binary, JSON, XML, or another representation.
+- Deserialization is the reverse process: converting serialized data (e.g., JSON) back into an object.
+- In Spring Boot, these behaviors can be customized using Jackson annotations
+- `@RequestBody` tells Spring to read the HTTP request body and deserialize its content into a Java object.
+- `@RestController` tells Spring to write returned objects into the HTTP response body, typically serialized as JSON.
+
+---
+
+### Content Negotiation
+
+- It is the ability to provide different representations of the same resource, delivering data in the format most suitable for the client (e.g., JSON, XML, YAML, CSV, PDF).
+- This allows the system to meet different integration requirements, such as supporting legacy and modern systems.
+- The response language can also be negotiated (e.g., English, Portuguese).
+- Server-Driven vs. Agent-Driven:
+    - Server-Driven: The server selects the most appropriate representation based on the client's preferences (e.g., Accept and Accept-Language headers).
+    - Agent-Driven: The client selects the desired representation from the alternatives provided by the server, depending on the available formats.
 
 ---
 

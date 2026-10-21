@@ -23,7 +23,8 @@ public class PersonControllerV2{
         this.service = service;
     }
 
-    @GetMapping(value = "/{id}", //
+    @GetMapping(
+        value = "/{id}", 
         produces = MediaType.APPLICATION_JSON_VALUE
     )    
     public PersonDTOV2 findById(@PathVariable("id") Long id) {
