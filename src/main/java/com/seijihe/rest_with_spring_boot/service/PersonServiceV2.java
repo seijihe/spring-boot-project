@@ -65,8 +65,10 @@ public class PersonServiceV2 {
         entity.setAge(person.getAge());
         entity.setCompany(person.getCompany());
         entity.setBirthday(person.getBirthday());
+
+        Person saved = repository.save(entity);
         
-        return mapper.personToPersonDTO(entity);
+        return mapper.personToPersonDTO(saved);
         
     }
 

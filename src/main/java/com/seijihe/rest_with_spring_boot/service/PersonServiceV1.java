@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import com.seijihe.rest_with_spring_boot.controller.PersonControllerV1;
 import com.seijihe.rest_with_spring_boot.dto.v1.PersonDTO;
 import com.seijihe.rest_with_spring_boot.dto.v1.PersonDTOMapper;
 import com.seijihe.rest_with_spring_boot.exception.ResourceNotFoundException;
@@ -43,7 +45,7 @@ public class PersonServiceV1 {
 
         // List<Person> people = new ArrayList<Person>();
 
-        // // Mock List Return
+        // Mock List Return
         // LongStream.rangeClosed(1, 5)
         //     .forEach(a -> {
         //         Person person = new Person();
@@ -54,8 +56,11 @@ public class PersonServiceV1 {
         //         people.add(person);
         //     });
         
- 
-        return mapper.personListToPersonDTOList(repository.findAll());
+        List<PersonDTO> people = mapper.personListToPersonDTOList(repository.findAll());
+        
+        people.forEach(this::addHateoasLinks); // people.forEach(p -> addHateoasLinks(p)); - The same
+        
+        return people;
         
     }
 
@@ -71,7 +76,11 @@ public class PersonServiceV1 {
         Person person = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("No records founded for this ID"));
         
-        return mapper.personToPersonDTO(person);
+        PersonDTO dto = mapper.personToPersonDTO(person);
+
+        addHateoasLinks(dto);
+
+        return dto;
 
     }
 
@@ -84,7 +93,11 @@ public class PersonServiceV1 {
 
         Person saved = repository.save(person);
 
-        return mapper.personToPersonDTO(saved);
+        PersonDTO dto = mapper.personToPersonDTO(saved);
+
+        addHateoasLinks(dto);
+        
+        return dto;
 
     }
 
@@ -100,8 +113,14 @@ public class PersonServiceV1 {
         entity.setName(person.getName());
         entity.setAge(person.getAge());
         entity.setCompany(person.getCompany());
+
+        Person saved = repository.save(entity);
         
-        return mapper.personToPersonDTO(entity);
+        PersonDTO dto = mapper.personToPersonDTO(saved);
+        
+        addHateoasLinks(dto);
+
+        return dto;
         
     }
 
@@ -115,4 +134,15 @@ public class PersonServiceV1 {
         repository.delete(entity);
 
     }
+
+    private void addHateoasLinks(PersonDTO dto) {
+
+        dto.add(linkTo(methodOn(PersonControllerV1.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(PersonControllerV1.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonControllerV1.class).create(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(PersonControllerV1.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(PersonControllerV1.class).slash(dto.getId()).withRel("delete").withType("DELETE")); //path-based link builder that works for void endpoints
+        
+    }
+
 }

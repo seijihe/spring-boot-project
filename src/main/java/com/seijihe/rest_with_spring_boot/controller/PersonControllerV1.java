@@ -56,7 +56,7 @@ public class PersonControllerV1 {
 
     @PostMapping(
         consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE }, // Automatically for Spring (until yaml/xml), but manual for Sweeger
-        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE }
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE } // To consume structure, apply an GET /api/v1/person/2 for the respect format (e.g xml, yaml), then update the content
     )
     public PersonDTO create(@RequestBody PersonDTO personDTO) {
         return service.create(personDTO);
